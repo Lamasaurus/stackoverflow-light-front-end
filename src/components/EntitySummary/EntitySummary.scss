@@ -1,0 +1,17 @@
+.voting-section {
+  .fa-chevron-up {
+    cursor: pointer;
+
+    &.is-active {
+      color: orange;
+    }
+  }
+
+  .fa-chevron-down {
+    cursor: pointer;
+
+    &.is-active {
+      color: red;
+    }
+  }
+}
