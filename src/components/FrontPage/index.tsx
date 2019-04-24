@@ -12,7 +12,7 @@ const FrontPage = () => {
 
   // Fetch data when the component gets mounted
   useEffect(() => {
-    APIAccess.getData<IQuestion[]>("/question/top").then(newQuestions =>
+    APIAccess.getData<IQuestion[]>("/question/top").then(newQuestions => 
       setQuestions(newQuestions)
     );
   }, []);
@@ -28,17 +28,17 @@ const FrontPage = () => {
           APIAccess.isLoggedIn() &&
           <div className="column is-2">
             <p className="control">
-              <Link className="button is-primary" to="/newquestion">Ask Question</Link>
+              <Link className="button is-primary" to="/newquestion" id="ask-question-button">Ask Question</Link>
             </p>
           </div>
         }
       </div>
-      <div className="questionList">
+      <div className="question-list">
         { 
           questions.map(question => {
             return (<QuestionPreview {...question} key={question._id} />);
           })
-         }
+        }
       </div>
     </div>
   );

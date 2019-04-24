@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import QuestionSummary from "../QuestionSummary";
 
+import "./QuestionPreview.scss";
+
 import { IQuestion } from "../QuestionPage";
 
 const QuestionPreview = (props: IQuestion) => {
@@ -12,11 +14,12 @@ const QuestionPreview = (props: IQuestion) => {
           <div className="content">
             <div className="columns">
               <div className="column">
-                <p>
+                <p className="question-preview-title">
                   <Link to={"/question/" + props._id}>
-                    <strong>{props.title}</strong>
-                  </Link>{" "}
-                  <br />
+                    {props.title}
+                  </Link>
+                </p>
+                <p className="question-preview-text">
                   {props.text.substring(0, 500)}
                 </p>
               </div>

@@ -9,14 +9,14 @@ const EntitySummary = (props: IEntitySummaryProps) => {
   const hasAnswerTotal = typeof props.answerTotal !== "undefined" ? props.answerTotal >= 0 : false;
 
   return (
-    <div className={ `column is-${ APIAccess.isLoggedIn() && hasAnswerTotal ? "3" : "2" }` }>
+    <div className={ `entity-summary column is-${ APIAccess.isLoggedIn() && hasAnswerTotal ? "3" : "2" }` }>
       <div className="level">
         {
           hasAnswerTotal &&
-          <div className="level-item has-text-centered">
+          <div className="level-item has-text-centered answer-display">
             <div>
               <p className="heading">Answers</p>
-              <p className="title is-4">{props.answerTotal}</p>
+              <p className="title is-4 answer-total">{props.answerTotal}</p>
             </div>
           </div>
         }
@@ -24,7 +24,7 @@ const EntitySummary = (props: IEntitySummaryProps) => {
         <div className="level-item has-text-centered">
           <div>
             <p className="heading">Votes</p>
-            <p className="title is-4">{props.voteTotal}</p>
+            <p className="title is-4 vote-total">{props.voteTotal}</p>
           </div>
         </div>
 
@@ -34,14 +34,14 @@ const EntitySummary = (props: IEntitySummaryProps) => {
             <div>
               <i
                 className={
-                  `fas fa-chevron-up ${props.userVote == 1 ? "is-active" : ""}`
+                  `up-vote fas fa-chevron-up ${props.userVote == 1 ? "is-active" : ""}`
                 }
                 onClick={() => props.changeVote(1)}
               />
               <br />
               <i
                 className={
-                  `fas fa-chevron-down ${props.userVote == -1 ? "is-active" : ""}`
+                  `down-vote fas fa-chevron-down ${props.userVote == -1 ? "is-active" : ""}`
                 }
                 onClick={() => props.changeVote(-1)}
               />

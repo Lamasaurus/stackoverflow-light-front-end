@@ -1,4 +1,4 @@
-import React, { useEffect, useState }from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.scss";
 
@@ -10,8 +10,7 @@ const Navbar = () => {
 
   // Get the username if already logged in
   useEffect(() => {
-    if (APIAccess.isLoggedIn())
-      setUserName(APIAccess.getUser().userName);
+    if (APIAccess.isLoggedIn()) setUserName(APIAccess.getUser().userName);
   }, []);
 
   // Subscribe to the APIAcces to see when the user loggs in or out
@@ -28,24 +27,28 @@ const Navbar = () => {
   let userSection;
   if (userName) {
     userSection = (
-      <div className="navbar-end">
+      <div className="navbar-end" id="logout-buttons">
         <div className="navbar-item">
-          <p>Welcome { userName }!</p>
+          <p>Welcome {userName}!</p>
         </div>
         <div className="navbar-item">
-          <Link className="button is-danger" to="/" onClick={APIAccess.loggOut}>Log out</Link>
+          <Link className="button is-danger logout-button" to="/" onClick={APIAccess.loggOut}>
+            Log out
+          </Link>
         </div>
       </div>
     );
   } else {
     userSection = (
-      <div className="navbar-end">
+      <div className="navbar-end" id="login-buttons">
         <div className="navbar-item">
           <div className="buttons">
             <Link className="button is-primary" to="/signin">
-              <strong>Sign up</strong>
+              Sign up
             </Link>
-            <Link className="button is-light" to="/signin">Log in</Link>
+            <Link className="button is-light" to="/signin">
+              Log in
+            </Link>
           </div>
         </div>
       </div>
@@ -61,7 +64,9 @@ const Navbar = () => {
 
         <a
           role="button"
-          className={ `navbar-burger burger ${hamburgerIsActive ? "is-active" : ""}` }
+          className={`navbar-burger burger ${
+            hamburgerIsActive ? "is-active" : ""
+          }`}
           aria-label="menu"
           aria-expanded="false"
           data-target="navbarButtons"
@@ -73,8 +78,11 @@ const Navbar = () => {
         </a>
       </div>
 
-      <div id="navbarButtons" className={ `navbar-menu ${hamburgerIsActive ? "is-active" : ""}` }>
-        { userSection }
+      <div
+        id="navbarButtons"
+        className={`navbar-menu ${hamburgerIsActive ? "is-active" : ""}`}
+      >
+        {userSection}
       </div>
     </nav>
   );
