@@ -14,7 +14,7 @@ const QuestionPage = (props: any) => {
     text: "",
     postTime: 0,
     voteTotal: 0,
-    answerTotal: 0,
+    answerTotal: 0
   });
   const [answers, setAnswers] = useState<IAnswer[]>([]);
   const [answerToSubmit, setAnswerToSubmit] = useState<string>("");
@@ -32,7 +32,7 @@ const QuestionPage = (props: any) => {
 
   // Effect to keep track of aswers changes
   useEffect(() => {
-    setQuestion({ ...question, answerTotal: answers.length});
+    setQuestion({ ...question, answerTotal: answers.length });
   }, [answers]);
 
   // Load questions
@@ -42,46 +42,52 @@ const QuestionPage = (props: any) => {
     }).then(answers => {
       setAnswers(answers);
     });
-  }
+  };
 
   let submitAnswer = () => {
-    APIAccess.postData("/answer/", { questionId: question._id, text: answerToSubmit })
-      .then(() => {
-        setAnswerToSubmit("");
-        getAnswers(question._id);
-      });
+    APIAccess.postData("/answer/", {
+      questionId: question._id,
+      text: answerToSubmit
+    }).then(() => {
+      setAnswerToSubmit("");
+      getAnswers(question._id);
+    });
   };
 
   // Create answer elements or a message that says there are no answers
-  let answerElements; 
-  if(answers.length)
-    answerElements = answers.map(answer => <Answer { ...answer } key={ answer._id } />);
-  else
-    answerElements = <small>No answers submitted yet!</small>;
+  let answerElements;
+  if (answers.length)
+    answerElements = answers.map(answer => (
+      <Answer {...answer} key={answer._id} />
+    ));
+  else answerElements = <small className="no-answers-label">No answers submitted yet!</small>;
 
   let submitAnswerElement;
   if (APIAccess.isLoggedIn()) {
     const submitAnswerChanged = (event: React.FormEvent) => {
       const textarea = event.target as HTMLTextAreaElement;
       setAnswerToSubmit(textarea.value);
-    }
+    };
 
     submitAnswerElement = (
-      <div className="box">
+      <div className="box submit-answer-section">
         <h1 className="title is-6">Submit Answer</h1>
         <div className="field">
           <div className="control">
-            <textarea 
+            <textarea
               className="textarea"
-              id="answerInput"
+              id="answer-input"
               placeholder="Your Answer."
               value={answerToSubmit}
-              onChange={submitAnswerChanged}></textarea>
+              onChange={submitAnswerChanged}
+            />
           </div>
         </div>
         <div className="field">
           <p className="control">
-            <a className="button is-primary" onClick={submitAnswer}>Submit</a>
+            <a className="button is-primary answer-submit-button" onClick={submitAnswer}>
+              Submit
+            </a>
           </p>
         </div>
       </div>
@@ -92,7 +98,7 @@ const QuestionPage = (props: any) => {
     <div className="box question">
       <div className="columns">
         <div className="column">
-          <h1 className="title is-3">{question.title}</h1>
+          <h1 className="title is-3 question-title">{question.title}</h1>
         </div>
 
         <QuestionSummary
@@ -100,18 +106,17 @@ const QuestionPage = (props: any) => {
           answerTotal={question.answerTotal}
           id={props.match.params.questionId}
         />
-
       </div>
 
-      <p>{question.text}</p>
+      <p className="question-text">{question.text}</p>
 
       <p>
-        <small>
+        <small className="question-details">
           Posted by {question.userId} on {question.postTime}.
         </small>
       </p>
 
-      <h1 className="title is-5 answer-title">Answers ({ answers.length })</h1>
+      <h1 className="title is-5 answer-title">Answers ({answers.length})</h1>
       {answerElements}
 
       {submitAnswerElement}

@@ -1,6 +1,5 @@
 import React from "react";
-import { act } from "react-dom/test-utils";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import SignInPage from ".";
 import APIAccess from "../../lib/API";
 import { Redirect } from "react-router";
