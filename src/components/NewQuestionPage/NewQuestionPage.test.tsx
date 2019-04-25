@@ -1,11 +1,11 @@
 import React from "react";
 import { act } from "react-dom/test-utils";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 
 import APIAccess, { IUser } from "../../lib/API";
 
 import NewQuestionPage from ".";
-import { Redirect, MemoryRouter } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { IQuestion } from "../QuestionPage";
 
 describe("<NewQuestionPage /> not logged in", () => {
@@ -54,8 +54,7 @@ describe("<NewQuestionPage /> logged in", () => {
 
     fetch.mockResponseOnce(JSON.stringify(question));
 
-    let wrapper;
-    wrapper = shallow(<NewQuestionPage />);
+    const wrapper = shallow(<NewQuestionPage />);
 
     wrapper
       .find("#question-title-input")

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 import "./SignInPage.scss";
@@ -6,38 +6,31 @@ import "./SignInPage.scss";
 import APIAccess from "../../lib/API";
 
 const SignInPage = () => {
-  // Get the username and password from the form
-  const getFormData = (): IUserLogginInformation => {
-    const userNameInputElement = document.getElementById(
-      "userNameInput"
-    ) as HTMLInputElement;
-    const userName = userNameInputElement.value;
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
 
-    const passwordInputElement = document.getElementById(
-      "passwordInput"
-    ) as HTMLInputElement;
-    const password = passwordInputElement.value;
+  const updateUserName = (event: React.FormEvent) => {
+    const userNameInput = event.target as HTMLInputElement;
+    setUserName(userNameInput.value);
+  };
 
-    return { userName, password }
-  }
+  const updatePassword = (event: React.FormEvent) => {
+    const passwordInput = event.target as HTMLInputElement;
+    setPassword(passwordInput.value);
+  };
 
   // Log the user in
   const logIn = () => {
-    const {userName, password} = getFormData();
-
     APIAccess.loggIn(userName, password);
   };
 
   // Register a new user
   const register = () => {
-    const user = getFormData();
-
-    APIAccess.postData("/user/register", user);
-  }
+    APIAccess.postData("/user/register", { userName, password });
+  };
 
   // If user is already logged in, redirect to hom
-  if (APIAccess.isLoggedIn())
-    return <Redirect to="/" />;
+  if (APIAccess.isLoggedIn()) return <Redirect to="/" />;
 
   return (
     <div className="signinForm">
@@ -47,31 +40,48 @@ const SignInPage = () => {
         <div className="field">
           <label className="label">User Name</label>
           <div className="control">
-            <input
-              className="input"
-              id="userNameInput"
-              type="text"
-            />
+            <input 
+              className="input" 
+              id="user-name-input" 
+              type="text" 
+              value={userName}
+              onChange={updateUserName}
+             />
           </div>
         </div>
 
         <div className="field">
           <label className="label">Password</label>
           <div className="control">
-            <input
-              className="input"
-              id="passwordInput"
-              type="password"
+            <input className="input" 
+              id="password-input" 
+              type="password" 
+              value={password} 
+              onChange={updatePassword} 
             />
           </div>
         </div>
 
         <div className="field is-grouped is-grouped-centered">
           <p className="control">
-            <Link to="/signin" onClick={ register } className="button is-primary">Register</Link>
+            <Link
+              to="/signin"
+              onClick={register}
+              className="button is-primary"
+              id="register-button"
+            >
+              Register
+            </Link>
           </p>
           <p className="control">
-            <Link to="/" onClick={ logIn } className="button is-light">Login</Link>
+            <Link
+              to="/"
+              onClick={logIn}
+              className="button is-light"
+              id="login-button"
+            >
+              Login
+            </Link>
           </p>
         </div>
       </form>
