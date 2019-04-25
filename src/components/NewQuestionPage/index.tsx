@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import APIAccess from "../../lib/API";
 
 import { IQuestion } from "../QuestionPage";
@@ -50,7 +50,7 @@ const NewQuestionPage = () => {
           <div className="control">
             <input
               className="input"
-              id="questionTitleInput"
+              id="question-title-input"
               type="text"
               value={questionTitle}
               onChange={updateQuestionTitle}
@@ -63,7 +63,7 @@ const NewQuestionPage = () => {
           <div className="control">
             <textarea
               className="textarea"
-              id="textInput"
+              id="question-text-input"
               placeholder="Describe your question."
               value={questionDescription}
               onChange={updateQuestionDescription}
@@ -72,7 +72,7 @@ const NewQuestionPage = () => {
         </div>
 
         <div className="field is-grouped is-grouped-centered">
-          <p className="button is-primary" onClick={postQuestion}>Submit</p>
+          <p className="button is-primary" id="post-button" onClick={postQuestion}>Submit</p>
         </div>
       </form>
     </div>

@@ -81,7 +81,7 @@ interface ITokenResponse {
   userId: string;
 }
 
-interface IUser {
+export interface IUser {
   userId: string;
   userName: string;
 }
