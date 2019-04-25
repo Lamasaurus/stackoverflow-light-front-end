@@ -32,10 +32,7 @@ const QuestionSummary = (props: IQuestionSummaryProps) => {
 
   const changeVote = (value: number) => {
     // Post the new vote
-    const user = APIAccess.getUser();
-
     APIAccess.postData("/vote/question/", {
-      userId: user,
       value,
       questionId: props.id
     }).then(() => {

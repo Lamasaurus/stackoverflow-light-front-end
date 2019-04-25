@@ -30,12 +30,8 @@ const Answer = (props: IAnswer) => {
   };
 
   const changeVote = (value: number) => {
-
     // Post the new vote
-    const user = APIAccess.getUser();
-
     APIAccess.postData("/vote/answer/", {
-      userId: user,
       value,
       answerId: props._id
     }).then(() => {
@@ -44,12 +40,12 @@ const Answer = (props: IAnswer) => {
   };
 
   return (
-    <div className="box answer" key={props._id}>
+    <div className="box answer">
       <div className="columns">
         <div className="column">
-          <p>{props.text}</p>
+          <p className="answer-text">{props.text}</p>
           <p>
-            <small>
+            <small className="answer-details">
               Posted by {props.userId} on {props.postTime}.
             </small>
           </p>
