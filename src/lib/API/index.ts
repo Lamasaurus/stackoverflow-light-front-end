@@ -9,7 +9,7 @@ class APIAccess extends EventEmitter{
   private userId: string = "";
 
   // The base address of the api
-  public baseAPIAddress = "http://localhost:4000/api";
+  public baseAPIAddress = `${window.location.origin}/api`;
 
   // Fetches data from the API and casts it to T
   public getData<T>(url: string, body: any = {}): Promise<T> {
