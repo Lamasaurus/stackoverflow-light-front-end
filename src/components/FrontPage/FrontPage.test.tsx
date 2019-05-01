@@ -1,6 +1,6 @@
 import React from "react";
 import { act } from "react-dom/test-utils";
-import { shallow, mount } from "enzyme";
+import { shallow, mount, ReactWrapper } from "enzyme";
 import { MemoryRouter } from "react-router-dom";
 
 import FrontPage from "./";
@@ -34,13 +34,13 @@ describe("<FrontPgae />", () => {
         text: "Text",
         postTime: 0,
         voteTotal: 0,
-        answerTotal: 0
-      }
+        answerTotal: 0,
+      },
     ];
 
     fetch.mockResponseOnce(JSON.stringify(questions));
 
-    let wrapper;
+    let wrapper: ReactWrapper;
 
     // This will give a warning
     // But it is a known issue that they are actively working on
@@ -49,12 +49,77 @@ describe("<FrontPgae />", () => {
       wrapper = mount(
         <MemoryRouter>
           <FrontPage />
-        </MemoryRouter>
+        </MemoryRouter>,
       );
     });
 
-    process.nextTick(() => {
-      expect(wrapper.update().find(".question-preview").length).toBe(1);
+    return new Promise(res => {
+      setTimeout(() => {
+        res(expect(wrapper.update().find(".question-preview").length).toBe(1));
+      });
+    });
+  });
+
+  it("should be able to enter a filter", () => {
+    const questions: IQuestion[] = [
+      {
+        _id: "0",
+        userId: "0",
+        title: "Title",
+        text: "Text",
+        postTime: 0,
+        voteTotal: 0,
+        answerTotal: 0,
+      },
+    ];
+
+    const filteredQuestions: IQuestion[] = [
+      {
+        _id: "0",
+        userId: "0",
+        title: "Title",
+        text: "Text",
+        postTime: 0,
+        voteTotal: 0,
+        answerTotal: 0,
+      },
+      {
+        _id: "0",
+        userId: "0",
+        title: "Title",
+        text: "Text",
+        postTime: 0,
+        voteTotal: 0,
+        answerTotal: 0,
+      },
+    ];
+
+
+    fetch.mockResponseOnce(JSON.stringify(questions));
+    fetch.mockResponseOnce(JSON.stringify(filteredQuestions));
+
+    let wrapper: ReactWrapper;
+
+    // This will give a warning
+    // But it is a known issue that they are actively working on
+    // https://github.com/facebook/react/issues/14769
+    act(() => {
+      wrapper = mount(
+        <MemoryRouter>
+          <FrontPage />
+        </MemoryRouter>,
+      );
+    });
+
+    act(() => {
+      const searchField = wrapper.find("#question-search-field");
+      searchField.simulate("change", { target: { value: "text" } });
+    });
+
+    return new Promise(res => {
+      setTimeout(() => {
+        res(expect(wrapper.update().find(".question-preview").length).toBe(2));
+      });
     });
   });
 });
