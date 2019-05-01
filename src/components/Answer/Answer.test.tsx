@@ -25,7 +25,7 @@ describe("<QuestionSummary />", () => {
     );
   });
 
-  it("should display a entity summary", () => {
+  it("should display an entity summary", () => {
     const wrapper = shallow(<Answer {...params} />);
 
     expect(wrapper.containsMatchingElement(<EntitySummary />)).toBe(true);
@@ -38,13 +38,13 @@ describe("<QuestionSummary />", () => {
     APIAccess.isLoggedIn = jest.fn(() => true);
 
     fetch
-      .mockResponseOnce({
+      .mockResponseOnce(JSON.stringify({
         _id: "2",
         userId: "1",
         answerId: "0",
         value: 1
-      })
-      .mockResponseOnce(1);
+      }))
+      .mockResponseOnce("1");
 
     act(() => {
       mount(<Answer {...params} />);
@@ -68,14 +68,14 @@ describe("<QuestionSummary />", () => {
     });
 
     fetch
-      .mockResponseOnce({})
-      .mockResponseOnce({
+      .mockResponseOnce("{}")
+      .mockResponseOnce(JSON.stringify({
         _id: "2",
         userId: "1",
         answerId: "0",
         value: 1
-      })
-      .mockResponseOnce(1);
+      }))
+      .mockResponseOnce("1");
 
     let wrapper;
     act(() => {

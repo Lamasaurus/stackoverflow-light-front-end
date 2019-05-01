@@ -27,13 +27,13 @@ describe("<QuestionSummary />", () => {
     APIAccess.isLoggedIn = jest.fn(() => true);
 
     fetch
-      .mockResponseOnce({
+      .mockResponseOnce(JSON.stringify({
         _id: "2",
         userId: "1",
         questionId: "0",
         value: 1
-      })
-      .mockResponseOnce(1);
+      }))
+      .mockResponseOnce("1");
 
     act(() => {
       mount(<QuestionSummary {...params} />);
@@ -57,14 +57,14 @@ describe("<QuestionSummary />", () => {
     });
 
     fetch
-      .mockResponseOnce({})
-      .mockResponseOnce({
+      .mockResponseOnce("{}")
+      .mockResponseOnce(JSON.stringify({
         _id: "2",
         userId: "1",
         questionId: "0",
         value: 1
-      })
-      .mockResponseOnce(1);
+      }))
+      .mockResponseOnce("1");
 
     let wrapper;
     act(() => {

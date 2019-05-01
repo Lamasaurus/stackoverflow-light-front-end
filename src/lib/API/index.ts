@@ -8,7 +8,7 @@ class APIAccess extends EventEmitter{
   public userName: string = "";
   private userId: string = "";
 
-  // The wase address of the api
+  // The base address of the api
   public baseAPIAddress = "http://localhost:4000/api";
 
   // Fetches data from the API and casts it to T
