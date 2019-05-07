@@ -1,44 +1,30 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Stackoverflow-light-front-end
 
-## Available Scripts
+This is the front end for the stackoverflow project.
 
-In the project directory, you can run:
+## Usage
 
-### `npm start`
+To run the frontend simply clone it and make sure that the [back end](https://github.com/Lamasaurus/stackoverflow-light-back-end) is running, then run: 
+```
+npm install
+npm start
+```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Testing
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+To run the tests run:
+```
+npm test
+```
 
-### `npm test`
+The tests make use of a `fetch-mock` module setup in `./src/setupTests.ts` so we are able to test the integration between the `API` and components themselves.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Design decisions
+The frontend is completely implemented in Typescript. This way it is easier to reason about the code and easier to test in general making development faster.
 
-### `npm run build`
+The application is created using the React library because it is a lightweight and easy to use library to create component based applications. All components are implemented functionally because this way they are easier to reason about and maintain. In the future they are also supposed to be easier to test, I found this not the case for now and the `act()` test function to update components has a known [issue](https://github.com/facebook/react/issues/14769) to throw an uninformative error.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Each component resides in its own folder in `./src/components` this way we can reuse them all as we see fit. In each folder we find an `index.tsx` file that exports the component. I chose to use this instead of a `Component.tsx` file because now we are able to import them like this `import "../Component/"` instead of `import "../Component/Component"` which has the name of the component in it twice and is thus redundant. 
+Further we find a `Component.scss` file in some components which carries the styling for the particular component. Lastly each component will be accompanied with a `Component.test.tsx` file that defines the tests for that component. 
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+In `./src/lib/API` there is a class called `APIAccess` for API accesses. It is placed in the `lib` folder because it is not direct frontend code, but the frontend makes use of it. This is to make a separation between frontend code and business logic. `APIAccess` is exported as a singleton, this way all components that import it will use the same instance. This way we can store user login data and the access token here.
