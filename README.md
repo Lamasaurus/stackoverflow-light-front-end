@@ -27,4 +27,6 @@ The application is created using the React library because it is a lightweight a
 Each component resides in its own folder in `./src/components` this way we can reuse them all as we see fit. In each folder we find an `index.tsx` file that exports the component. I chose to use this instead of a `Component.tsx` file because now we are able to import them like this `import "../Component/"` instead of `import "../Component/Component"` which has the name of the component in it twice and is thus redundant. 
 Further we find a `Component.scss` file in some components which carries the styling for the particular component. Lastly each component will be accompanied with a `Component.test.tsx` file that defines the tests for that component. 
 
+All tests came after the implementation of the component it tests except for the search function, where I tried TTD.
+
 In `./src/lib/API` there is a class called `APIAccess` for API accesses. It is placed in the `lib` folder because it is not direct frontend code, but the frontend makes use of it. This is to make a separation between frontend code and business logic. `APIAccess` is exported as a singleton, this way all components that import it will use the same instance. This way we can store user login data and the access token here.
